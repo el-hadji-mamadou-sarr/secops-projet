@@ -10,6 +10,9 @@ env:
   IMAGE_NAME: secops-api
   IMAGE_TAG: ${{ github.sha }}
 
+# Deny all permissions by default; each job grants only what it needs
+permissions: {}
+
 jobs:
   # ─────────────────────────────────────────────
   # Job 1 : Lint
@@ -17,6 +20,8 @@ jobs:
   lint:
     name: Lint (Dockerfile + YAML)
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -42,6 +47,8 @@ jobs:
     name: Build Docker Image
     runs-on: ubuntu-latest
     needs: lint
+    permissions:
+      contents: read
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -135,6 +142,8 @@ jobs:
     name: Policy Check (Conftest / OPA)
     runs-on: ubuntu-latest
     needs: lint
+    permissions:
+      contents: read
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -157,6 +166,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [lint, build, security-scan, policy-check]
     if: always()
+    permissions: {}
     steps:
       - name: Print summary
         run: |
