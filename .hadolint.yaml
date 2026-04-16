@@ -1,0 +1,6 @@
+failure-threshold: warning
+ignore:
+  - DL3018  # Allow unspecified package versions in alpine (not used here but good practice)
+trustedRegistries:
+  - docker.io
+  - ghcr.io

@@ -1,0 +1,8 @@
+node_modules/
+*.tar
+*.log
+.env
+.env.*
+dist/
+*.md
+
