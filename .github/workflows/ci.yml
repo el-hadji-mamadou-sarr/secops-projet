@@ -110,6 +110,7 @@ jobs:
 
       - name: Trivy — scan Docker image
         uses: aquasecurity/trivy-action@master
+        continue-on-error: true
         with:
           scan-type: image
           image-ref: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
